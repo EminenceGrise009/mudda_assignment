@@ -1,0 +1,15 @@
+// Example Navigation
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => TaskDetailScreen(selectedTask),
+  ),
+);
+
+// Navigate to TaskForm for adding or editing tasks
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => TaskForm(task: existingTask),
+  ),
+);

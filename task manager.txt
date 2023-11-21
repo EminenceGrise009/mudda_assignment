@@ -1,0 +1,36 @@
+// Task Service using Firebase Realtime Database
+import 'package:firebase_database/firebase_database.dart';
+
+class TaskService {
+  final databaseReference = FirebaseDatabase.instance.reference().child('tasks');
+
+  // Get Tasks
+  Stream<Event> getTasksStream() {
+    return databaseReference.onValue;
+  }
+
+  // Add Task
+  Future<void> addTask(Task task) async {
+    await databaseReference.push().set({
+      'title': task.title,
+      'description': task.description,
+      'dueDate': task.dueDate.toIso8601String(),
+      'isCompleted': task.isCompleted,
+    });
+  }
+
+  // Update Task
+  Future<void> updateTask(String key, Task task) async {
+    await databaseReference.child(key).update({
+      'title': task.title,
+      'description': task.description,
+      'dueDate': task.dueDate.toIso8601String(),
+      'isCompleted': task.isCompleted,
+    });
+  }
+
+  // Delete Task
+  Future<void> deleteTask(String key) async {
+    await databaseReference.child(key).remove();
+  }
+}

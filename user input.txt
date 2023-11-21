@@ -1,0 +1,58 @@
+// Example Add/Edit Task Form
+class TaskForm extends StatefulWidget {
+  final Task? task; // For editing existing task, pass the task object here
+
+  TaskForm({this.task});
+
+  @override
+  _TaskFormState createState() => _TaskFormState();
+}
+
+class _TaskFormState extends State<TaskForm> {
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
+  late DateTime _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.task?.title ?? '');
+    _descriptionController =
+        TextEditingController(text: widget.task?.description ?? '');
+    _selectedDate = widget.task?.dueDate ?? DateTime.now();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.task != null ? 'Edit Task' : 'Add Task'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              controller: _titleController,
+              decoration: InputDecoration(labelText: 'Title'),
+            ),
+            TextFormField(
+              controller: _descriptionController,
+              decoration: InputDecoration(labelText: 'Description'),
+            ),
+            // Add Date Picker for selecting due date
+            // Implement Save button to add/update task
+          ],
+        ),
+      ),
+    );
+  }
+}

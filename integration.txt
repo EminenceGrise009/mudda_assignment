@@ -1,0 +1,45 @@
+// Example usage in a Flutter Widget
+import 'package:flutter/material.dart';
+
+class TaskListScreen extends StatefulWidget {
+  @override
+  _TaskListScreenState createState() => _TaskListScreenState();
+}
+
+class _TaskListScreenState extends State<TaskListScreen> {
+  final AuthService _auth = AuthService();
+  final TaskService _taskService = TaskService();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Task List'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await _auth.signOut();
+              // Navigate to login screen
+            },
+          ),
+        ],
+      ),
+      body: StreamBuilder(
+        stream: _taskService.getTasksStream(),
+        builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+          // Handle snapshot data to display tasks
+          // Use ListView.builder to display tasks
+          return Container(); // Placeholder container
+        },
+      ),
+      // Add Floating Action Button to add new tasks
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Navigate to AddTaskScreen
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
